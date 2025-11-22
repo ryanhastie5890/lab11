@@ -13,7 +13,13 @@ class Initial(Operator):
         words = text.split()
         newText = ""
         for word in words:
-            newText = newText+word[0].capitalize()+". "
+            for index in range(len(word)):
+               if word[index].isalnum():
+                  newText = newText+word[index].capitalize()+". "
+                  break
+               else:
+                   newText = newText+word[index]
+                   
         newText = newText.rstrip()
         return newText
 
