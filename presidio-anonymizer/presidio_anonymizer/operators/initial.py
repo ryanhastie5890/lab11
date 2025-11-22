@@ -1,0 +1,36 @@
+"""Replaces the PII text entity with an initials based representation."""
+
+from typing import Dict
+
+from presidio_anonymizer.operators import Operator, OperatorType
+
+
+class Initial(Operator):
+    """make it its initial"""
+
+    def operate(self, text: str = None, params: Dict = None) -> str:
+        """:return: initials"""
+        words = text.split()
+        newText = ""
+        for word in words:
+            for index in range(len(word)):
+               if word[index].isalnum():
+                  newText = newText+word[index].capitalize()+". "
+                  break
+               else:
+                   newText = newText+word[index]
+                   
+        newText = newText.rstrip()
+        return newText
+
+    def validate(self, params: Dict = None) -> None:
+        """Redact does not require any parameters so no validation is needed."""
+        pass
+
+    def operator_name(self) -> str:
+        """Return operator name."""
+        return "initial"
+
+    def operator_type(self) -> OperatorType:
+        """Return operator type."""
+        return OperatorType.Anonymize
