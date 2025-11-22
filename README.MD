@@ -13,16 +13,32 @@ From the <module> sample.py (line 35),
 to the main method in sample.py (line 29), 
 to the run_anonymizer method in the sample.py (line 13)
 to the anonymize method in AnonymizerEngine Class (line 104)
-[complete the call stack here]
+to _operate in engine_base.py (line 54)
+to _operate_on_text in engine_base.py (line 86)
+to create_operator_class in operators_factory.py (line 133)
 ```
 
 * How many if/elif branches are used in selecting the operator?
-*Put your answer here*
+there are two if branches used being:
+ if not operators_by_type:
+            logger.error(f"No such operator type {operator_type}")
+            raise InvalidParamError(f"Invalid operator type '{operator_type}'.")
+
+        operator = operators_by_type.get(operator_name)
+       if not operator:
+            logger.error(f"No such operator {operator_name}")
+            raise InvalidParamError(f"Invalid operator class '{operator_name}'.")
+
+        return operator()
+
+these branches help to throw errors if the type is not found
 
 * What data structure (a Python data type) exactly is used to select the operator?
-*Put your answer here*
+a python dictionary is used
 
 * Explain how "Strategy" design pattern is reflected here.
+
+This reflect the strategy design pattern as it allows the program to easily create operator and use it at run time. We were able to create the initial operator, and did not need to add another if else statement in the operator_factory.py in order for it to be used. We just created the initial class then basically plugged it in.
 
 
 ---
